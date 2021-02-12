@@ -5,6 +5,10 @@
 % frontal ankles (17/18) for TOBE. The joint numbers correspond to the
 % Dynamixel ID numbers for the left/right joints, respectively.
 
+% Go down to the third section of this script "Set goal positions, create
+% command, present position variables" to change the number and values of
+% goal positions to be executed when running the script. 
+
 % NOTE: If you haven't already, go to 'Set Path' under the MATLAB Home Tab (Environment section),
 % click 'Add with Subfolders' and select the c/include folder from the
 % DynamixelSDK folder. Then, click 'Add Folder' and select the
@@ -248,7 +252,7 @@ else
     return;
 end
 
-%% Enable Dynamixel Torque and connect Dynamixels
+%% Enable Dynamixel Torques and connect Dynamixels
 write1ByteTxRx(port_num, PROTOCOL_VERSION, ID01, ADDR_MX_TORQUE_ENABLE, TORQUE_ENABLE);
 write1ByteTxRx(port_num, PROTOCOL_VERSION, ID02, ADDR_MX_TORQUE_ENABLE, TORQUE_ENABLE);
 write1ByteTxRx(port_num, PROTOCOL_VERSION, ID03, ADDR_MX_TORQUE_ENABLE, TORQUE_ENABLE);
@@ -381,6 +385,7 @@ while 1
         fprintf('[ID:%03d] GoalPos:%03d  PresPos:%03d\n', ID17, GOAL17(index), NOW17);
         fprintf('[ID:%03d] GoalPos:%03d  PresPos:%03d\n', ID18, GOAL18(index), NOW18);
         
+        % break loop when any of the motors is within threshold of desired position
         if ~(abs(GOAL01(index) - NOW01) > DXL_MOVING_STATUS_THRESHOLD)
             if ~(abs(GOAL02(index) - NOW02) > DXL_MOVING_STATUS_THRESHOLD)
                 if ~(abs(GOAL03(index) - NOW03) > DXL_MOVING_STATUS_THRESHOLD)
@@ -419,10 +424,9 @@ while 1
             end
         end
         count = count + 1;
-%         pause(0.5);
     end
-    index = index + 1;
-    if index > np
+    index = index + 1; % increase index to go to next goal position during next loop
+    if index > np % break loop after last goal position is reached
         break;
     end
 end
