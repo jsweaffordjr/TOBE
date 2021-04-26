@@ -3,7 +3,7 @@
 % elbows (5/6), transverse hips (7/8), frontal hips (9/10),
 % sagittal hips (11/12), knees (13/14), sagittal ankles (15/16), and 
 % frontal ankles (17/18) for TOBE. The joint numbers correspond to the
-% Dynamixel ID numbers for the left/right joints, respectively.
+% Dynamixel ID numbers for the right/left joints, respectively.
 
 % Go down to the third section of this script "Set goal positions, create
 % command, present position variables" to change the number and values of
